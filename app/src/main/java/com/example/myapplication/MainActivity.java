@@ -1,20 +1,21 @@
 package com.example.myapplication;
 
         import androidx.appcompat.app.AppCompatActivity;
-        import android.annotation.SuppressLint;
+
         import android.os.Bundle;
         import android.view.View;
-        import android.view.View.OnClickListener;
         import android.widget.Button;
         import android.widget.EditText;
-        import java.lang.String;
+        import java.lang.String;    
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    boolean badd, bsub, bmul, bdiv, beql;
+    enum operationType { NONE, ADD, SUB, MUL, DIV, EQUAL};
+    boolean btnEqualClicked = false;
+    operationType opType = operationType.NONE;
     float x, y;
-    EditText result, cache;
-    Button btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btnC, btnEqual, btnsum, btnsub, btnmul, btndiv;
+    EditText editer, cache;
+    Button btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btnClear, btnEqual, btnSum, btnSub, btnMul, btnDiv;
 
     public static boolean isNumeric(String str) {
         try {
@@ -30,7 +31,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Create object
+        createObject();     //Create object
+        createButtonClickEvent();       // Create button click event
+    }
+
+    private void createObject() {
         btn0 = (Button) findViewById(R.id.button0);
         btn1 = (Button) findViewById(R.id.button1);
         btn2 = (Button) findViewById(R.id.button2);
@@ -42,259 +47,188 @@ public class MainActivity extends AppCompatActivity {
         btn8 = (Button) findViewById(R.id.button8);
         btn9 = (Button) findViewById(R.id.button9);
         btn10 = (Button) findViewById(R.id.button10);
-        btnC = (Button) findViewById(R.id.buttonC);
+        btnClear = (Button) findViewById(R.id.buttonClear);
         btnEqual = (Button) findViewById(R.id.buttonEqual);
 
         cache = (EditText) findViewById(R.id.editTextCache);
-        result = (EditText) findViewById(R.id.editText);
+        editer = (EditText) findViewById(R.id.editText);
 
-        btnsum = (Button) findViewById(R.id.buttonadd);
-        btnsub = (Button) findViewById(R.id.buttonsub);
-        btnmul = (Button) findViewById(R.id.buttonmul);
-        btndiv = (Button) findViewById(R.id.buttondiv);
+        btnSum = (Button) findViewById(R.id.buttonAdd);
+        btnSub = (Button) findViewById(R.id.buttonSub);
+        btnMul = (Button) findViewById(R.id.buttonMul);
+        btnDiv = (Button) findViewById(R.id.buttonDiv);
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
 
 
-        // Create button click event
-        btn0.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(beql && isNumeric((result.getText()+"").trim())) {
-                    cache.setText( result.getText());
-                    result.setText("");
-                    beql= false;
-                }
-                result.setText(result.getText() + "0");
-            }
-        });
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(beql && isNumeric((result.getText()+"").trim())) {
-                    cache.setText( result.getText());
-                    result.setText("");
-                    beql= false;
-                }
-                result.setText(result.getText() + "1");
-            }
-        });
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(beql && isNumeric((result.getText()+"").trim())) {
-                    cache.setText( result.getText());
-                    result.setText("");
-                    beql= false;
-                }
-                result.setText(result.getText() + "2");
-            }
-        });
-        btn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(beql && isNumeric((result.getText()+"").trim())) {
-                    cache.setText( result.getText());
-                    result.setText("");
-                    beql= false;
-                }
-                result.setText(result.getText() + "3");
-            }
-        });
-        btn4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(beql && isNumeric((result.getText()+"").trim())) {
-                    cache.setText( result.getText());
-                    result.setText("");
-                    beql= false;
-                }
-                result.setText(result.getText() + "4");
-            }
-        });
-        btn5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(beql && isNumeric((result.getText()+"").trim())) {
-                    cache.setText( result.getText());
-                    result.setText("");
-                    beql= false;
-                }
-                result.setText(result.getText() + "5");
-            }
-        });
-        btn6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(beql && isNumeric((result.getText()+"").trim())) {
-                    cache.setText( result.getText());
-                    result.setText("");
-                    beql= false;
-                }
-                result.setText(result.getText() + "6");
-            }
-        });
-        btn7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(beql && isNumeric((result.getText()+"").trim())) {
-                    cache.setText( result.getText());
-                    result.setText("");
-                    beql= false;
-                }
-                result.setText(result.getText() + "7");
-            }
-        });
-        btn8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(beql && isNumeric((result.getText()+"").trim())) {
-                    cache.setText( result.getText());
-                    result.setText("");
-                    beql= false;
-                }
-                result.setText(result.getText() + "8");
-            }
-        });
-        btn9.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(beql && isNumeric((result.getText()+"").trim())) {
-                    cache.setText( result.getText());
-                    result.setText("");
-                    beql= false;
-                }
-                result.setText(result.getText() + "9");
-            }
-        });
+        switch (id) {
+            case R.id.button0:
+                updateCacheForNumberClicked();
+                editer.setText(editer.getText() + "0");
+                break;
+            
+            case R.id.button1:
+                updateCacheForNumberClicked();
+                editer.setText(editer.getText() + "1");
+                break;
+            
+            case R.id.button2:
+                updateCacheForNumberClicked();
+                editer.setText(editer.getText() + "2");
+                break;
+            
+            case R.id.button3:
+                updateCacheForNumberClicked();
+                editer.setText(editer.getText() + "3");
+                break;
+            
+            case R.id.button4:
+                updateCacheForNumberClicked();
+                editer.setText(editer.getText() + "4");
+                break;
+            
+            case R.id.button5:
+                updateCacheForNumberClicked();
+                editer.setText(editer.getText() + "5");
+                break;
+            
+            case R.id.button6:
+                updateCacheForNumberClicked();
+                editer.setText(editer.getText() + "6");
+                break;
+            
+            case R.id.button7:
+                updateCacheForNumberClicked();
+                editer.setText(editer.getText() + "7");
+                break;
+            
+            case R.id.button8:
+                updateCacheForNumberClicked();
+                editer.setText(editer.getText() + "8");
+                break;
+            
+            case R.id.button9:
+                updateCacheForNumberClicked();
+                editer.setText(editer.getText() + "9");
+                break;
+            
+            case R.id.button10:
+                updateCacheForNumberClicked();
+                editer.setText(editer.getText() + ".");
+                break;
+            
+            case R.id.buttonAdd:
+                cache.setText( editer.getText());       // update cache
 
-        btnsum.setOnClickListener(new View.OnClickListener() {
+                if((editer.getText().toString()).isEmpty())     // check if first value empty
+                    x = 0;
+                else x = Float.parseFloat(editer.getText().toString());     //otherwise extract number value
 
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View v) {
-                if(result==null) {
-                    result.setText("");
-                }
-                else {
-                    cache.setText( result.getText());
+                opType = operationType.ADD;
+                editer.setText("+ ");
+                break;
+            
+            case R.id.buttonSub:
+                cache.setText( editer.getText());       // update cache
 
-                    if((result.getText().toString()).isEmpty())
-                        x = 0;
-                    else x = Float.parseFloat(result.getText().toString());
-                    badd= true;
-                    result.setText("+ ");
-                }
-            }
-        });
+                if((editer.getText().toString()).isEmpty())     // check if first value empty
+                    x = 0;
+                else x = Float.parseFloat(editer.getText().toString());     //otherwise extract number value
 
-        btnsub.setOnClickListener(new View.OnClickListener() {
+                opType = operationType.SUB;
+                editer.setText("- ");
+                break;
+            
+            case R.id.buttonMul:
+                cache.setText( editer.getText());       // update cache
 
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View v) {
-                if(result==null) {
-                    result.setText("");
-                }
-                else {
-                    cache.setText( result.getText());
+                if((editer.getText().toString()).isEmpty())     // check if first value empty
+                    x = 0;
+                else x = Float.parseFloat(editer.getText().toString());     //otherwise extract number value
 
-                    if((result.getText().toString()).isEmpty())
-                        x = 0;
-                    else x = Float.parseFloat(result.getText().toString());
-                    bsub = true;
-                    result.setText("- ");
-                }
-            }
-        });
+                opType = operationType.MUL;
+                editer.setText("* ");
+                break;
+            
+            case R.id.buttonDiv:
+                cache.setText( editer.getText());
 
-        btnmul.setOnClickListener(new View.OnClickListener() {
+                if((editer.getText().toString()).isEmpty())
+                    x = 0;
+                else x = Float.parseFloat(editer.getText().toString());
+                opType = operationType.DIV;
+                editer.setText("/ ");
+                break;
+            
+            case R.id.buttonClear:
+                editer.setText("");
+                cache.setText("");
+                break;
+            
+            case R.id.buttonEqual:
+                String str = editer.getText()+"";
 
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View v) {
-                if(result==null) {
-                    result.setText("");
-                }
-                else {
-                    cache.setText( result.getText());
+                btnEqualClicked = true;
 
-                    if((result.getText().toString()).isEmpty())
-                        x = 0;
-                    else x = Float.parseFloat(result.getText().toString());
-                    bmul = true;
-                    result.setText("* ");
-                }
-            }
-        });
-
-        btndiv.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                if(result==null) {
-                    result.setText("");
-                }
-                else {
-                    cache.setText( result.getText());
-
-                    if((result.getText().toString()).isEmpty())
-                        x = 0;
-                    else x = Float.parseFloat(result.getText().toString());
-                    bdiv = true;
-                    result.setText("/ ");
-                }
-            }
-        });
-
-        btnEqual.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String str = result.getText()+"";
-
-                beql = true;
                 if((str.substring(1)).isEmpty())
                     y = 0;
                 else y = Float.parseFloat(str.substring(1));
-                cache.setText(x+" "+str.substring(0,2)+" "+y);
+                cache.setText(x + " "+ str.substring(0,2) + " " + y);
 
-                if (badd) {
-                    result.setText(x + y + "");
-                    badd = false;
+                switch (opType) {
+                    case ADD:
+                        editer.setText(x + y + "");
+                        break;
+            
+                    case SUB:
+                        editer.setText(x - y + "");
+                        break;
+            
+                    case MUL:
+                        editer.setText(x * y + "");
+                        break;
+            
+                    case DIV:
+                        editer.setText(x / y + "");
+                        break;
+            
                 }
+                opType = operationType.NONE;
+                break;
+        }
+    }
 
-                if (bsub) {
-                    result.setText(x - y + "");
-                    bsub = false;
-                }
+    private void updateCacheForNumberClicked() {
 
-                if (bmul) {
-                    result.setText(x * y + "");
-                    bmul = false;
-                }
+        if( btnEqualClicked && isNumeric(( editer.getText() + "").trim() )) {
+            cache.setText( editer.getText() );
+            editer.setText( "" );
+            btnEqualClicked = false;
+        }
+    }
 
-                if (bdiv) {
-                    result.setText(x / y + "");
-                    bdiv = false;
-                }
-            }
-        });
+    private void createButtonClickEvent() {
 
-        btnC.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                result.setText("");
-                cache.setText("");
-            }
-        });
+        btn0.setOnClickListener(this);
+        btn1.setOnClickListener(this);
+        btn2.setOnClickListener(this);
+        btn3.setOnClickListener(this);
+        btn4.setOnClickListener(this);
+        btn5.setOnClickListener(this);
+        btn6.setOnClickListener(this);
+        btn7.setOnClickListener(this);
+        btn8.setOnClickListener(this);
+        btn9.setOnClickListener(this);
+        btn10.setOnClickListener(this);
+        btnSub.setOnClickListener(this);
+        btnSum.setOnClickListener(this);
+        btnMul.setOnClickListener(this);
+        btnDiv.setOnClickListener(this);
+        btnClear.setOnClickListener(this);
+        btnEqual.setOnClickListener(this);
 
-        btn10.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(beql && isNumeric((result.getText()+"").trim())) {
-                    cache.setText( result.getText());
-                    result.setText("");
-                    beql= false;
-                }
-                result.setText(result.getText() + ".");
-            }
-        });
     }
 }
