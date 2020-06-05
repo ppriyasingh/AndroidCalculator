@@ -12,10 +12,11 @@ import java.lang.String;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    enum operationType { NONE, ADD, SUB, MUL, DIV};
+    enum operationType { NONE, ADD, SUB, MUL, DIV}
+
     boolean btnEqualClicked = false;
     operationType opType = operationType.NONE;
-    float x, y;
+    float x = 0, y = 0;
     EditText editor;
     TextView cache;
 
@@ -37,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if( v instanceof Button ) {
             Button btn = (Button) v;
             String btnText = "" + btn.getText();
-            String inputText = editor.getText().toString();
 
             if ( "c".equalsIgnoreCase(btnText) ) {
                 editor.setText("");
@@ -45,12 +45,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             else if ( "=".equalsIgnoreCase(btnText) ) {
 
-                String str = inputText + "";
+                if( btnEqualClicked && opType == operationType.NONE) return;
+
+                String str = editor.getText() + "";
                 btnEqualClicked = true;
-                if ( (str.substring(1) ).isEmpty())
-                    y = 0;
-                else y = Float.parseFloat(str.substring(1));
-                cache.setText( x + " " + str.substring(0, 2) + " " + y );
+
+                if(str.length() >2) {
+                    if (str.substring(1).isEmpty())
+                        y = 0;
+                    else y = Float.parseFloat(str.substring(1));
+                    if (opType == operationType.NONE)
+                        cache.setText( y + "");
+                    else cache.setText( x + " " + str.substring(0, 2) + " " + y );
+                }
 
                 switch (opType) {
                     case ADD:
@@ -71,23 +78,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 opType = operationType.NONE;
             }
-            else if (Character.isDigit(btnText.toCharArray()[0]) || ".".equalsIgnoreCase(btnText)) {
+            else if (Character.isDigit( btnText.toCharArray()[0] ) || ".".equalsIgnoreCase( btnText )) {
 
-                if( btnEqualClicked && isNumeric(( inputText + "").trim() )) {
-                    cache.setText( inputText );
-                    inputText = "";
+                if( editor.getText().toString().indexOf('.') >= 0 && ".".equalsIgnoreCase(btnText)) return;
+
+                if( btnEqualClicked && isNumeric(( editor.getText() + "").trim() )) {
+                    cache.setText( editor.getText() );
+                    editor.setText("");
                     btnEqualClicked = false;
                 }
-                editor.setText( inputText + btnText);
+                editor.setText( editor.getText() + btnText);
             }
             else {
                 if(opType == operationType.NONE ) {
-                    cache.setText(inputText);       // update cache
+                    cache.setText(editor.getText());       // update cache
 
-                    if ((inputText.toString()).isEmpty())     // check if first value empty
+                    if (editor.getText().toString().isEmpty())     // check if first value empty
                         x = 0;
                     else
-                        x = Float.parseFloat(inputText.toString());     //otherwise extract number value
+                        x = Float.parseFloat(editor.getText().toString());     //otherwise extract number value
                 }
 
                 switch(btnText.toCharArray()[0]) {
